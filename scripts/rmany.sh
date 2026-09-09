@@ -10,9 +10,10 @@
 # KIND=queuefill is set for the container so the c* clients are offenders; the victim launch
 # overrides it per-process with KIND=resnet.
 set -u
-# 대상 GPU 의 UUID. nvidia-smi --query-gpu=index,uuid --format=csv 로 얻는다.
-G0=${GPU_UUID:?GPU_UUID 를 지정하세요 (예: GPU-xxxxxxxx-....)}
-# 이 스크립트가 있는 디렉터리. 컨테이너에 /w 로 마운트된다.
+# UUID of the target GPU. Get it with:
+#   nvidia-smi --query-gpu=index,uuid --format=csv
+G0=${GPU_UUID:?set GPU_UUID (e.g. GPU-xxxxxxxx-....)}
+# Directory holding this script; mounted into the container as /w.
 Q=${Q:-$(cd "$(dirname "$0")" && pwd)}
 run(){ # <nclient> <nkill> <tag>
   docker run --rm --runtime=nvidia --ipc=host -e NVIDIA_VISIBLE_DEVICES=$G0 \
