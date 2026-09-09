@@ -1,0 +1,15 @@
+=== hung mps-control (host 140330) ===
+[<0>] futex_wait_queue+0x64/0xa0
+[<0>] __futex_wait+0x155/0x1d0
+[<0>] futex_wait+0x74/0x120
+[<0>] do_futex+0x105/0x260
+[<0>] __x64_sys_futex+0x12a/0x200
+[<0>] x64_sys_call+0x111/0x25a0
+[<0>] do_syscall_64+0x7f/0x180
+[<0>] entry_SYSCALL_64_after_hwframe+0x78/0x80
+=== threads wchan ===
+140330: futex_wait_queue
+140331: __skb_wait_for_more_packets
+=== status ===
+State:	S (sleeping)
+Threads:	2

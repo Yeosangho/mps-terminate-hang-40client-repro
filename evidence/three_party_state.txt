@@ -1,0 +1,18 @@
+=== 행 시점 3자 상태 (재현 35~90분 구간) ===
+
+mps-control -d  (데몬  135761)
+  main thread : __skb_wait_for_more_packets   <- 데몬이 recv 에서 무한 대기
+  thread 2    : pipe_read
+  열린 소켓 4개 (컨테이너 netns 내부라 피어 특정 불가)
+
+mps-control     (CLI   140330)
+  main thread : futex_wait_queue
+  thread 2    : __skb_wait_for_more_packets   <- CLI 는 데몬 응답 대기
+  열린 소켓 1개
+
+mps-server      (       138634)
+  pipe_read                                   <- 서버는 한가함
+
+해석: CLI 가 느린 것이 아니라 **데몬이 응답을 못 만든다**.
+      서버가 pipe_read 로 놀고 있으므로 GPU 작업 대기가 아니다.
+      데몬이 무언가를 recv 하려고 영원히 기다리는 상태다.
